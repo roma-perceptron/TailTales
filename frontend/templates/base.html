@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TailTales{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/styles.css') }}?v={{ APP_VERSION }}">
+    <link rel="stylesheet" href="/assets/svg-assets.css?v={{ APP_VERSION }}">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
+    {% block extra_styles %}{% endblock %}
+</head>
+<body>
+    <main class="central-container">
+        <nav class="nav-header">
+            <a href="/" class="nav-link">
+                <span>T</span><span style="font-size: 85%">T</span><span style="font-size: 70%">T</span>
+            </a>
+            {% if user %}
+            {% if not ties %}<a href="/ties" class="nav-link">← К связкам</a>{% endif %}
+            <a href="" class="nav-link" title="Пока нет, но скоро будут..">Настройки</a>
+            <a href="/auth/logout" class="nav-link">Выйти</a>
+            <a class="nav-link">user_id: #{{user.id}}</a>
+            {% endif %}
+        </nav>
+        {% block content %}{% endblock %}
+    </main>
+
+    {% block scripts %}{% endblock %}
+    <script src="https://unpkg.com/notie"></script>
+    <script src="{{ url_for('static', path='/js/base.js') }}?v={{ APP_VERSION }}"></script>
+    <script src="{{ url_for('static', path='/js/events.js') }}?v={{ APP_VERSION }}"></script>
+    <script src="{{ url_for('static', path='/js/api.js') }}?v={{ APP_VERSION }}"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Список задач{% endblock %}
+
+{% block content %}
+    <h1 class="main-title">Вход</h1>
+    <div class="auth_page">
+        <form id="login_form">
+            <textarea name="token" placeholder="Введи код" required></textarea>
+            <button>Войти</button>
+        </form>
+        <button id="create_user_button">Или создать новый пустой аккаунт</button>
+    </div>
+{% endblock %}

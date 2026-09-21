@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Связки хвостов{% endblock %}
+
+{% block content %}
+    <h1 class="main-title">Связки</h1>
+    <section class="list-wrapper">
+        {% for tie in ties %}
+            <div class="list-element" data-tie-id="{{tie.id}}">
+                <div class="checkbox" data-tie-type="{{tie.type}}">
+                    <select data-level="tie">
+                        <option disabled selected>Опции</option>
+                        <option value="rename">Переименовать</option>
+                        <option value="delete">Удалить</option>
+                    </select>
+                </div>
+                <div class="tie-desc">
+                    <a href="/tie/{{tie.id}}">{{ tie.desc }}</a>
+                </div>
+            </div>
+        {% endfor %}
+        <input class="add_tie_x" placeholder="создай новую связку">
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Хвосты с историями{% endblock %}
+
+{% block content %}
+    <h1 class="main-title">{{tie.desc}}</h1>
+    <section class="list-wrapper">
+        {% for tail in tails %}
+            <div class="list-element" data-tail-id="{{tail.id}}" data-status="{{tail.status.value}}" {% if loop.index % 3 == 0 %} data-tail-counter="{{loop.index}}"{% endif %}>
+                <div class="checkbox" data-status="{{tail.status.value}}">
+                    <select data-level="tail">
+                        {% for st_val, st_name in statuses.items() %}
+                        <option value="{{st_val}}" {% if st_val==tail.status.value %} selected {% endif %}>{{st_name}}</option>
+                        {% endfor %}
+                        <option disabled>-</option>
+                        <option value="delete">Удалить</option>
+                    </select>
+                </div>
+                <span class="tail-desc">{{ tail.desc }}</span>
+                {% if tail.tales %}
+                <div class="separator"></div>
+                <span class="tale-desc" data-tale-id="{{tail.tales[-1].id}}">{{tail.tales[-1].desc}}</span>
+                {% endif %}
+
+                {% if tail.status.value in ['new', 'active'] %}
+                <input class="add_tale_x" placeholder="+ запиши сделанную работу" data-tail-status="{{tail.status.value}}">
+                {% endif %}
+            </div>
+        {% endfor %}
+        <input class="add_tail_x" placeholder="+ запиши новую задачу" data-tie-id="{{tie.id}}">
+    </section>
+{% endblock %}
