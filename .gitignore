@@ -324,4 +324,5 @@ pyrightconfig.json
 #
 .idea
 materials.md
+deploy.txt
 requirements_old.txt
