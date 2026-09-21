@@ -1,0 +1,23 @@
+name: Deploy TailTails App on VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ${{ secrets.PROJECT_PATH }}
+            git pull origin main  # свежий код
+            docker compose up -d --build  # пересборка контейнера
+            docker compose exec -T fastapi_app alembic upgrade head  # миграции
+            docker image prune -f   # для очистки от старых версий
