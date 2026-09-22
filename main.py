@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from backend.config import BASE_PATH
 from fastapi.staticfiles import StaticFiles
@@ -13,7 +14,6 @@ api_metadata = [
     {"name": "AUTH operations", "description": "Регистрация, авторизация, вход и выход пользователя"},
     {"name": "WEB pages", "description": "Хосты веб-страниц"},
 ]
-
 app = FastAPI(
     title="TailTales API",
     description="Секрет для входа хранится в APIKeyCookie. Поэтому для тестов закрытых методов необходимо авторизоваться"
@@ -25,6 +25,8 @@ app = FastAPI(
 app.mount("/static", StaticFiles(directory=BASE_PATH / "frontend/static"), name="static")
 app.add_exception_handler(404, html_404_handler)
 app.add_exception_handler(500, html_500_handler)
+
+app.state = os.getenv("APP_STATE", "PROD")
 
 
 app.include_router(auth_router)
