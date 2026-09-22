@@ -2,7 +2,9 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    {% if request.app.state != "DEV" %}
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    {% endif %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}TailTales{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', path='/css/styles.css') }}?v={{ APP_VERSION }}">
