@@ -16,8 +16,14 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd ${{ secrets.PROJECT_PATH }}
-            git pull origin main  # свежий код
-            docker compose up -d --build  # пересборка контейнера
-            docker compose exec -T fastapi_app alembic upgrade head  # миграции
-            docker image prune -f   # для очистки от старых версий
+            cd ${{ secrets.PROJECT_PATH }} && \
+            # сброс локальных правок на сервере
+            git reset --hard HEAD && \
+            # свежий код
+            git pull origin main && \
+            # пересборка контейнера
+            docker compose up -d --build && \
+            # миграции
+            docker compose exec -T fastapi_app alembic upgrade head && \
+            # очистка от старых версий
+            docker image prune -f
