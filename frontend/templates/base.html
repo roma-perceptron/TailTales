@@ -2,11 +2,20 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml"  href="{{ url_for('static', path='/favicon.svg') }}?v={{ APP_VERSION }}">
     {% if request.app.state != "DEV" %}
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     {% endif %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}TailTales{% endblock %}</title>
+    <meta name="description" content="TailTales — это To-Do-Done-List планировщик для тех, кого бесят классические списки дел">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="TailTales — организация записей о сделанных делах">
+    <meta property="og:description" content="To-Do-Done-List планировщик для тех, кого бесят классические списки дел">
+    <meta property="og:url" content="https://{{ request.app.domain }}">
+    <meta property="og:image" content="https://{{ request.app.domain }}/static/tailtales.png">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="stylesheet" href="{{ url_for('static', path='/css/styles.css') }}?v={{ APP_VERSION }}">
     <link rel="stylesheet" href="/assets/svg-assets.css?v={{ APP_VERSION }}">
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
@@ -16,7 +25,8 @@
     <main class="central-container">
         <nav class="nav-header">
             <a href="/" class="nav-link">
-                <span>T</span><span style="font-size: 85%">T</span><span style="font-size: 70%">T</span>
+                {# <span>T</span><span style="font-size: 85%">T</span><span style="font-size: 70%">T</span> #}
+                <img src="{{ url_for('static', path='/favicon.svg') }}?v={{ APP_VERSION }}" style="filter: invert(1);" alt="Тт" width="20" height="20">
             </a>
             {% if user %}
             {% if not ties %}<a href="/ties" class="nav-link">← К связкам</a>{% endif %}

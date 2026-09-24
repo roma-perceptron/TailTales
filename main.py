@@ -27,6 +27,7 @@ app.add_exception_handler(404, html_404_handler)
 app.add_exception_handler(500, html_500_handler)
 
 app.state = os.getenv("APP_STATE", "PROD")
+app.domain = 'tt.markyloop.online'
 
 
 app.include_router(auth_router)
