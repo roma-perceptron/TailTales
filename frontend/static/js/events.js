@@ -15,7 +15,7 @@ document.querySelectorAll('.add_tale_x').forEach(e => {
     });
 });
 
-document.querySelectorAll('.tale-desc').forEach(e => {
+document.querySelectorAll('.tale-desc-edit').forEach(e => {
     e.addEventListener('dblclick', (event) => {
         let tale_id = e.dataset.taleId;
         notie.input({ text: 'Изменить описание', value: e.innerText}, function (value){
