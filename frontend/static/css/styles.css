@@ -1,4 +1,5 @@
 :root {
+    interpolate-size: allow-keywords;
     --prime-text-color: #22252a;
     --minor-text-color: #3164f4;
     --lines-text-color: #9c27b0;
@@ -94,9 +95,13 @@ body {
 .list-element {
     margin: 25px 0;
     display: flex;
-    align-items: center;
+    align-items: self-start;
     gap: 16px;
     position: relative;
+}
+
+.list-element .checkbox {
+    margin-top: 3px;
 }
 
 .list-element[data-tail-counter]::before {
@@ -156,12 +161,51 @@ body {
     background: var(--prime-text-color);
     margin: 0 10px;
     transform: rotate(5deg);
+    transition: var(--basic-transition);
+}
+
+.separator::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -15px;
+    right: -15px;
+    bottom: 0;
+    cursor: pointer;
+}
+
+
+.tale-desc-stories {
+    display: none;
+    height: 0;
+    overflow: hidden;
+    transition: var(--basic-transition);
+}
+
+.list-element:has(.separator-toggle:checked)::after {
+    mask-image: var(--empty);
+}
+
+.separator-toggle:checked ~ .separator {
+    transform: rotate(25deg);
+}
+.separator-toggle:checked ~ .tale-desc-last  {
+    display: none;
+}
+.separator-toggle:checked ~ .tale-desc-stories {
+    display: block;
+    height: fit-content;
+
+    @starting-style {
+        height: 0;
+    }
 }
 
 .tie-desc {
     font-size: 150%;
     color: var(--prime-text-color);
 }
+
 
 .tie-desc a {
     color: var(--prime-text-color);
@@ -187,13 +231,41 @@ body {
     padding-left: 5px;
     line-height: 1.2;
     text-shadow: 0 0 0.3px rgba(33, 59, 122, 0.2);
-    max-width: 35%;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     transition: var(--basic-transition);
     opacity: 1;
+}
+
+.tale-desc.story {
+    padding-top: 5px;
+    -webkit-line-clamp: none;
+    -webkit-box-orient: unset;
+}
+
+.created-label {
+    font-size: 65%;
+    font-family: monospace;
+    word-spacing: -4px;
+    color: var(--prime-text-color);
+    padding-right: 4px;
+}
+
+.created-label::before {
+    display: inline-block;
+    content: "";
+    width: 12px;
+    height: 12px;
+    padding-right: 4px;
+    background-color: var(--prime-text-color);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-image: var(--svg-icon-active);
+    -webkit-mask-image: var(--svg-icon-active);
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
 }
 
 input {

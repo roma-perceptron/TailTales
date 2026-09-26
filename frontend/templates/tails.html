@@ -18,8 +18,17 @@
                 </div>
                 <span class="tail-desc">{{ tail.desc }}</span>
                 {% if tail.tales %}
-                <div class="separator"></div>
-                <span class="tale-desc" data-tale-id="{{tail.tales[-1].id}}">{{tail.tales[-1].desc}}</span>
+                <input type="checkbox" id="separator-toggle-{{tail.id}}" class="separator-toggle" hidden>
+                <label class="separator" for="separator-toggle-{{tail.id}}"></label>
+                <span class="tale-desc tale-desc-edit tale-desc-last" data-tale-id="{{tail.tales[-1].id}}">{{tail.tales[-1].desc}}</span>
+                <div class="tale-desc-stories">
+                    {% for tale in tail.tales | reverse %}
+                    <div class="tale-desc story" data-tale-id="{{tale.id}}">
+                        <span class="created-label">{{tale.created.strftime('%a, %d %b, %H:%M') | en2ru_strftime }}</span>
+                        <span class="tale-desc-edit">{{tale.desc}}</span>
+                    </div>
+                    {% endfor %}
+                </div>
                 {% endif %}
 
                 {% if tail.status.value in ['new', 'active'] %}

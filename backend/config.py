@@ -3,6 +3,7 @@ import time
 import pathlib
 from dotenv import load_dotenv
 from fastapi.templating import Jinja2Templates
+from frontend.templates.filters import FILTERS_DICT
 
 
 # корень проекта
@@ -20,6 +21,7 @@ DB_URL_SYNC = f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME
 DB_URL_ASYNC = f"mysql+aiomysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 
-# шаблоны
+# шаблоны и фильтры
 templates = Jinja2Templates(directory=BASE_PATH / "frontend/templates")
 templates.env.globals["APP_VERSION"] = int(time.time())
+templates.env.filters.update(FILTERS_DICT)
