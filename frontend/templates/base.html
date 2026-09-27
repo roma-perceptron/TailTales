@@ -26,7 +26,7 @@
         <nav class="nav-header">
             <a href="/" class="nav-link">
                 {# <span>T</span><span style="font-size: 85%">T</span><span style="font-size: 70%">T</span> #}
-                <img src="{{ url_for('static', path='/favicon.svg') }}?v={{ APP_VERSION }}" style="filter: invert(1);" alt="Тт" width="20" height="20">
+                <img src="{{ url_for('static', path='/favicon.svg') }}?v={{ APP_VERSION }}" style="filter: brightness(0.85) contrast(2) invert(1);" alt="Тт" width="20" height="20">
             </a>
             {% if user %}
             {% if not ties %}<a href="/ties" class="nav-link">← К связкам</a>{% endif %}
