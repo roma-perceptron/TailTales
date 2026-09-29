@@ -56,6 +56,30 @@ document.querySelectorAll('.add_tie_x').forEach(e => {
 });
 
 
+document.querySelectorAll('.tie-desc').forEach(e => {
+    let clickTimeout = null;
+    //
+    e.addEventListener('click', (event) => {
+        clearTimeout(clickTimeout);
+        event.stopPropagation();
+        event.preventDefault();
+        clickTimeout = setTimeout(() => {
+            window.location.href = e.querySelector('a').href;
+        }, 300);
+    });
+    e.addEventListener('dblclick', (event) => {
+        clearTimeout(clickTimeout);
+        //
+        let tie_id = e.parentElement.getAttribute('data-tie-id');
+        let tie_desc = e.innerText;
+        //
+        notie.input({ text: 'Изменить название связки', value: tie_desc}, function (value){
+            if (value) updateTie(parseInt(tie_id), value.trim(), null);
+        });
+    });
+});
+
+
 document.querySelectorAll('.checkbox select').forEach(e => {
     e.addEventListener('change', () => {
         if (e.dataset.level == 'tail'){

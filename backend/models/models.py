@@ -1,6 +1,6 @@
 import enum
 from backend.db import Base
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import List, Optional
 from sqlalchemy import String, DateTime, Enum, ForeignKey, func, JSON
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -38,7 +38,8 @@ class User(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     hashed_token: Mapped[Optional[str]] = mapped_column(String(64), unique=True, nullable=True)
     settings: Mapped[dict] = mapped_column(JSON, default=dict)
-    last_activity: Mapped[datetime] = mapped_column(DateTime, server_default=func.now(), server_onupdate=func.now())
+    last_activity: Mapped[datetime] = mapped_column(
+        DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     #
     ties: Mapped[list["Tie"]] = relationship(back_populates="user", cascade="all, delete-orphan")
 
@@ -52,7 +53,7 @@ class Tie(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     desc: Mapped[str] = mapped_column(String(255))
-    created: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
+    created: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
     type: Mapped[TieType] = mapped_column(Enum(TieType), default=TieType.base, server_default="base")
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE")) # внешний ключ на юзера
     #
@@ -65,7 +66,7 @@ class Tail(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     desc: Mapped[str] = mapped_column(String(255))
-    created: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
+    created: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
     status: Mapped[TailStatus] = mapped_column(Enum(TailStatus), default=TailStatus.new, server_default="new")
     tie_id: Mapped[int] = mapped_column(ForeignKey("ties.id", ondelete="CASCADE")) # внешний ключ на связку
     #
@@ -78,7 +79,7 @@ class Tale(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     desc: Mapped[str] = mapped_column(String(255))
-    created: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
+    created: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
     tail_id: Mapped[int] = mapped_column(ForeignKey("tails.id", ondelete="CASCADE")) # внешний ключ на хвост
     #
     tail: Mapped["Tail"] = relationship(back_populates="tales")

@@ -3,7 +3,7 @@ from backend import utils
 from starlette import status
 from fastapi import APIRouter, Depends
 from backend.crud import UserRepository
-from fastapi import Response, HTTPException
+from fastapi import Request, Response, HTTPException
 from fastapi.responses import RedirectResponse
 from backend.models.schemas import TokenResponse, TokenRequest
 from backend.routers.depends import Context, get_context, get_current_user, is_authenticated_web
@@ -14,11 +14,12 @@ router = APIRouter(prefix="/auth", tags=["AUTH operations"], dependencies=[Depen
 
 
 @public.get("/register", response_model=TokenResponse)
-async def register_anonymous_user(response: Response, context: Context = Depends(get_context)):
-    raw_token = secrets.token_urlsafe(32).replace('-', 'x') # просто бесят дефисы недающие выделить кликом
+async def register_anonymous_user(request: Request, response: Response, context: Context = Depends(get_context)):
+    raw_token = secrets.token_urlsafe(32).replace('-', 'x') # просто бесят дефисы не дающие выделить кликом
     hashed = utils.hash_token(raw_token)
     #
-    user = await UserRepository.create(context.db, hashed_token=hashed)
+    settings = {"timezone": request.headers.get('X-User-Timezone', "UTC")}
+    user = await UserRepository.create(context.db, hashed_token=hashed, settings=settings)
     response.set_cookie(key="auth_token", value=raw_token, httponly=True, max_age=315360000, samesite="lax")
     #
     return {
