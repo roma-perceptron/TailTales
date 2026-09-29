@@ -24,7 +24,7 @@
 <body>
     <main class="central-container">
         <nav class="nav-header">
-            <a href="/" class="nav-link">
+            <a href="/" class="nav-link logo">
                 {# <span>T</span><span style="font-size: 85%">T</span><span style="font-size: 70%">T</span> #}
                 <img src="{{ url_for('static', path='/favicon.svg') }}?v={{ APP_VERSION }}" style="filter: brightness(0.85) contrast(2) invert(1);" alt="Тт" width="20" height="20">
             </a>
@@ -36,6 +36,11 @@
             {% endif %}
         </nav>
         {% block content %}{% endblock %}
+        <nav class="nav-footer">
+            <a href="https://github.com/roma-perceptron/TailTales" class="nav-link logo" target="_blank">
+                <img src="{{ url_for('static', path='/github.svg') }}?v={{ APP_VERSION }}" alt="github repo" width="20" height="20">
+            </a>
+        </nav>
     </main>
 
     {% block scripts %}{% endblock %}
