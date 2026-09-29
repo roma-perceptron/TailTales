@@ -84,12 +84,12 @@ document.querySelectorAll('.checkbox select').forEach(e => {
     e.addEventListener('change', () => {
         if (e.dataset.level == 'tail'){
             let tail_id = e.closest('.list-element').dataset.tailId;
-            if(e.value == "delete") deleteTail(tail_id);
+            if(e.value == "delete") notie.confirm({text: 'Удалить хвост?', submitCallback: function(){deleteTail(tail_id)}});
             else updateTail(parseInt(tail_id), null, e.value);
         }
         else if (e.dataset.level == 'tie'){
             let tie_id = e.closest('.list-element').dataset.tieId;
-            if(e.value == "delete") deleteTie(tie_id);
+            if(e.value == "delete") notie.confirm({text: 'Удалить связку?', submitCallback: function(){deleteTie(tie_id)}});
             else if(e.value == "rename") {
                 let desc = e.parentElement.parentElement.getElementsByClassName('tie-desc')[0].innerText;
                 notie.input({ text: 'Изменить название связки', value: desc}, function (value){
