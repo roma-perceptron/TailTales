@@ -8,8 +8,8 @@ from .models.models import User, Tie, Tail, Tale, TieType
 
 class UserRepository:
     @staticmethod
-    async def create(session: AsyncSession, hashed_token: str) -> User:
-        user = User(hashed_token=hashed_token)
+    async def create(session: AsyncSession, hashed_token: str, settings: dict) -> User:
+        user = User(hashed_token=hashed_token, settings=settings)
         session.add(user)
         await session.commit()
         await session.refresh(user)

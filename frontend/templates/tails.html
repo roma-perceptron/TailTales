@@ -24,7 +24,7 @@
                 <div class="tale-desc-stories">
                     {% for tale in tail.tales | reverse %}
                     <div class="tale-desc story" data-tale-id="{{tale.id}}">
-                        <span class="created-label">{{tale.created.strftime('%a, %d %b, %H:%M') | en2ru_strftime }}</span>
+                        <span class="created-label">{{(tale.created  | to_local_datetime(user.settings.get('timezone'))).strftime('%a, %d %b, %H:%M') | en2ru_strftime }}</span>
                         <span class="tale-desc-edit">{{tale.desc}}</span>
                     </div>
                     {% endfor %}

@@ -158,9 +158,10 @@ async function deleteTie(tie_id) {
 
 async function createUser() {
     try {
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         const response = await fetch('/auth/register', {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'X-User-Timezone': timezone },
         });
         const result = await response.json();
         //
